@@ -13,6 +13,5 @@ public:
 private:
 	std::string name;
 	float score;
-
 };
 

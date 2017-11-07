@@ -1,5 +1,6 @@
-#include "stdafx.h"
+#pragma once
 #include "AlumList.h"
+#include <iostream>
 
 
 AlumList::AlumList()
@@ -11,6 +12,15 @@ AlumList::AlumList()
 
 AlumList::~AlumList()
 {
+	AlumSListType *current = head;
+	while (current != NULL) {
+		current = current->getNext();
+		if (current != NULL)
+		{
+			delete(current->getPrev());
+		}
+		delete(this->tail);
+	}
 }
 
 bool AlumList::addAlum(Alum& alum)
@@ -32,7 +42,11 @@ bool AlumList::addAlum(Alum& alum)
 
 void AlumList::printListbyScore() 
 {
-
+	Alum* sortedAlums = heapSort();
+	for (int i = 0; i < getSize(); i++) {
+		std::cout << sortedAlums[i].getName();
+		std::cout << "\n";
+	}
 }
 int AlumList::getSize()
 {
@@ -53,6 +67,12 @@ Alum* AlumList::heapSort() {
 		heapify(sortedAlums, size, i);
 	}
 
+	for (int i = size - 1; i >= 0; i--)
+	{
+		std::swap(sortedAlums[0], sortedAlums[i]);
+		heapify(sortedAlums, i, 0);
+	}
+	return sortedAlums;
 }
 
 void AlumList::listToArray(Alum* array)
