@@ -72,6 +72,22 @@ bool AlumList::removeAlum(Alum& alum) {
 	return false;
 }
 
+bool AlumList::setScore(int index, float score)
+{
+	AlumSListType *current = head;
+	int i = 0;
+	while (current != NULL) {
+		if (i == index)
+		{
+			current->getAlum().setScore(score);
+			return true;
+		}
+		current = current->getNext();
+		i++;
+	}
+	return false;
+}
+
 
 void AlumList::printListbyScore() 
 {
@@ -80,6 +96,7 @@ void AlumList::printListbyScore()
 		sortedAlums[i]->print();
 		std::cout << "\n";
 	}
+	free(sortedAlums);
 }
 
 void AlumList::print() 

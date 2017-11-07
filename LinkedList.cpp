@@ -20,6 +20,8 @@ int main()
 	list.printListbyScore();
 //	list.print();
 	std::cout << "\n\n";
+	list.setScore(0, 7.0);
+	list.printListbyScore();
 //	list.removeAlum(alum1);
 //	list.print();
 	getchar();
