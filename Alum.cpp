@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Alum.h"
+#include <iostream>
 
 
 Alum::Alum(std::string name) 
@@ -31,4 +32,9 @@ float Alum::getScore()
 void Alum::setScore(float score)
 {
 	this->score = score;
+}
+
+void Alum::print() {
+	std::cout << this->name;
+	std::cout << " , " << this->score;
 }

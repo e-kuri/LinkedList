@@ -28,3 +28,13 @@ AlumSListType* AlumSListType::getPrev()
 {
 	return this->prev;
 }
+
+void AlumSListType::setNext(AlumSListType* next)
+{
+	this->next = next;
+}
+
+void AlumSListType::setPrev(AlumSListType* prev)
+{
+	this->prev = prev;
+}

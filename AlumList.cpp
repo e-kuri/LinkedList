@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include "AlumList.h"
 #include <iostream>
 
@@ -12,6 +13,7 @@ AlumList::AlumList()
 
 AlumList::~AlumList()
 {
+	/*
 	AlumSListType *current = head;
 	while (current != NULL) {
 		current = current->getNext();
@@ -21,33 +23,47 @@ AlumList::~AlumList()
 		}
 		delete(this->tail);
 	}
+	*/
 }
 
 bool AlumList::addAlum(Alum& alum)
 {
 	if (this->tail == NULL)
 	{
-		AlumSListType *toAdd = new AlumSListType(NULL, NULL);
+		AlumSListType *toAdd = new AlumSListType(NULL, NULL, &alum);
 		this->head = toAdd;
 		this->tail = toAdd;
 	}
 	else
 	{
-		AlumSListType *toAdd = new AlumSListType(NULL, tail);
-		tail->setNext = toAdd;
+		AlumSListType *toAdd = new AlumSListType(NULL, tail, &alum);
+		tail->setNext(toAdd);
 		this->tail = toAdd;
 	}
-
+	return true;
 }
 
 void AlumList::printListbyScore() 
 {
 	Alum* sortedAlums = heapSort();
 	for (int i = 0; i < getSize(); i++) {
-		std::cout << sortedAlums[i].getName();
+		sortedAlums[i].print();
 		std::cout << "\n";
 	}
 }
+
+void AlumList::print() 
+{
+	AlumSListType *current = head;
+	while (current != NULL) {
+		current->getAlum()->print();
+		std::cout << "\n";
+		current = current->getNext();
+	}
+}
+
+
+
 int AlumList::getSize()
 {
 	AlumSListType *current = head;
@@ -56,6 +72,7 @@ int AlumList::getSize()
 		i++;
 		current = current->getNext();
 	}
+	return i;
 }
 
 Alum* AlumList::heapSort() {

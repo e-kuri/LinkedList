@@ -9,6 +9,7 @@ public:
 	float getScore();
 	void setScore(float score);
 	std::string getName();
+	void print();
 
 private:
 	std::string name;
