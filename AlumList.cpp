@@ -43,11 +43,41 @@ bool AlumList::addAlum(Alum& alum)
 	return true;
 }
 
+bool AlumList::removeAlum(Alum& alum) {
+	AlumSListType *current = head;
+	while (current != NULL) {
+		if (&(current->getAlum()) == &alum) {
+			AlumSListType *currPrev = current->getPrev();
+			AlumSListType *currNext = current->getNext();
+			if (currPrev != NULL)
+			{
+				currPrev->setNext(currNext);
+			}
+			else
+			{
+				this->head = currNext;
+			}
+			if (currNext != NULL)
+			{
+				currNext->setPrev(currPrev);
+			}
+			else
+			{
+				this->tail = currPrev;
+			}
+			return true;
+		}
+		current = current->getNext();
+	}
+	return false;
+}
+
+
 void AlumList::printListbyScore() 
 {
-	Alum* sortedAlums = heapSort();
+	Alum** sortedAlums = heapSort();
 	for (int i = 0; i < getSize(); i++) {
-		sortedAlums[i].print();
+		sortedAlums[i]->print();
 		std::cout << "\n";
 	}
 }
@@ -56,7 +86,7 @@ void AlumList::print()
 {
 	AlumSListType *current = head;
 	while (current != NULL) {
-		current->getAlum()->print();
+		current->getAlum().print();
 		std::cout << "\n";
 		current = current->getNext();
 	}
@@ -75,9 +105,9 @@ int AlumList::getSize()
 	return i;
 }
 
-Alum* AlumList::heapSort() {
+Alum** AlumList::heapSort() {
 	int size = getSize();
-	Alum* sortedAlums = (Alum*)malloc(sizeof(Alum) * size);
+	Alum** sortedAlums = (Alum**)malloc(sizeof(Alum*) * size);
 	listToArray(sortedAlums);
 	for (int i = size / 2 - 1; i >= 0; i--)
 	{
@@ -92,30 +122,30 @@ Alum* AlumList::heapSort() {
 	return sortedAlums;
 }
 
-void AlumList::listToArray(Alum* array)
+void AlumList::listToArray(Alum** array)
 {
 	AlumSListType *current = head;
 	int i = 0;
 	while(current != NULL) {
-		array[i++] = *current->getAlum();
+		array[i++] = &current->getAlum();
 		current = current->getNext();
 	}
 }
 
 // To heapify a subtree rooted with node i which is
 // an index in arr[]. n is size of heap
-void AlumList::heapify(Alum arr[], int n, int i)
+void AlumList::heapify(Alum** arr, int n, int i)
 {
 	int largest = i;  // Initialize largest as root
 	int l = 2 * i + 1;  // left = 2*i + 1
 	int r = 2 * i + 2;  // right = 2*i + 2
 
 	// If left child is larger than root
-	if (l < n && arr[l].getScore() > arr[largest].getScore())
+	if (l < n && arr[l]->getScore() > arr[largest]->getScore())
 		largest = l;
 
 	// If right child is larger than largest so far
-	if (r < n && arr[r].getScore() > arr[largest].getScore())
+	if (r < n && arr[r]->getScore() > arr[largest]->getScore())
 		largest = r;
 
 	// If largest is not root
@@ -129,7 +159,7 @@ void AlumList::heapify(Alum arr[], int n, int i)
 }
 
 // main function to do heap sort
-void AlumList::heapSort(Alum arr[], int n)
+void AlumList::heapSort(Alum** arr, int n)
 {
 	// Build heap (rearrange array)
 	for (int i = n / 2 - 1; i >= 0; i--)

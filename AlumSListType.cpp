@@ -14,9 +14,9 @@ AlumSListType::~AlumSListType()
 {
 }
 
-Alum* AlumSListType::getAlum()
+Alum& AlumSListType::getAlum()
 {
-	return this->alum;
+	return *(this->alum);
 }
 
 AlumSListType* AlumSListType::getNext()

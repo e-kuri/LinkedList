@@ -5,6 +5,7 @@
 #include "AlumList.h"
 #include "Alum.h"
 #include "AlumSListType.h"
+#include <iostream>
 
 
 int main()
@@ -16,8 +17,11 @@ int main()
 	list.addAlum(alum1);
 	list.addAlum(alum2);
 	list.addAlum(alum3);
-//	list.printListbyScore();
-	list.print();
+	list.printListbyScore();
+//	list.print();
+	std::cout << "\n\n";
+//	list.removeAlum(alum1);
+//	list.print();
 	getchar();
     return 0;
 }

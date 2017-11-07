@@ -10,7 +10,7 @@ public:
 	void setPrev(AlumSListType *prev);
 	AlumSListType* getNext();
 	AlumSListType* getPrev();
-	Alum* getAlum();
+	Alum& getAlum();
 
 private:
 	AlumSListType *next;
